@@ -1,8 +1,22 @@
-import { useState ,useRef,useEffect} from 'react'
+import { useState ,useRef,useEffect,createContext, useContext,useMemo,useCallback} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-// import Navbar from './components/navbar'
+import Navbar from './components/navbar'
 import './App.css'
+import { counterContext} from './context/usecontext'
+
+
+
+
+
+
+// usememo context
+// const nums = new Array(30_000_000).fill(0).map((_, i)=>{
+//   return {
+//     index: i,
+//     isMagical: i===29_000_000
+//   }
+// })
 
 function App() {
 
@@ -91,6 +105,47 @@ function App() {
 
 
 
+
+
+
+ 
+  // usecontext used to avoid propdrilling
+  // const [count, setCount] = useState(0) 
+
+
+
+
+
+
+
+// usememo context to avoid rendering rendering occurs only in this function when there is change in numbers
+
+//   // const [count, setCount] = useState(0)
+//   // const [numbers, setNumbers] = useState(nums)
+
+//   // // const magical = numbers.find(item=>item.isMagical===true) // Expensive Computation
+//   // const magical = useMemo(() => numbers.find(item=>item.isMagical===true), [numbers])
+
+
+
+
+
+
+
+
+const [count, setCount] = useState(0)
+const [count2, setCount2] = useState(0)
+const [adjective, setAdjective] = useState("good")
+
+
+const getAdjective = useCallback(() => {
+  return "another" + count
+},[count] )
+
+
+
+
+
   return (
     <>
       
@@ -152,6 +207,60 @@ function App() {
 
 
 
+
+
+
+ {/* usecontext used to avoid propdrilling
+
+<counterContext.Provider value={{count, setCount}}>
+
+
+<Navbar/>
+
+</counterContext.Provider> */}
+
+
+
+
+
+
+
+
+
+
+
+{/* usememo context
+<span>Magical number is {magical.index}</span>
+
+<button onClick={() => {
+          setCount((count) => count + 1);
+          if(count == 10){
+            setNumbers(new Array(10_000_000).fill(0).map((_, i)=>{
+              return {
+                index: i,
+                isMagical: i===9_000_000
+              }
+            }))
+          }
+        
+        }}>
+          count is {count}
+        </button> */}
+
+
+
+
+
+
+
+
+
+
+
+<Navbar adjective={"good"} getAdjective={getAdjective} />
+<button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
 
 
 
